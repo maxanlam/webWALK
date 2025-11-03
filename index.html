@@ -62,7 +62,8 @@
             const ctx = canvas.getContext("2d");
             ctx.beginPath();
             ctx.arc(150, 150, 20, 0, 2 * Math.PI);
-            ctx.fill();
+            ctx.fillStyle = "blue";
+            
           } else {
             const latPositionOnCanvas = locations[i].lat - locations[i - 1].lat;
             console.log(latPositionOnCanvas);
