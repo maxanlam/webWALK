@@ -10,6 +10,7 @@
     <p id="demo"></p>
 
     <script>
+
       const locations = [];
       function geolocation() {
         const x = document.getElementById("demo");
@@ -63,13 +64,13 @@
             ctx.beginPath();
             ctx.arc(150, 150, 20, 0, 2 * Math.PI);
             ctx.fill();
-            
           } else {
             const latPositionOnCanvas = locations[i].lat - locations[i - 1].lat;
             console.log(latPositionOnCanvas);
           }
         }
       }
+    
     </script>
   </body>
 </html>
