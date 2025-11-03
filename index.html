@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <canvas
+    id="canvas"
+    width="300"
+    height="300"
+    style="border: 1px solid #d3d3d3; position: fixed; left: 0; bottom: 0"
+  ></canvas>
+  <body>
+    <p id="demo"></p>
+
+    <script>
+      const locations = [];
+      function geolocation() {
+        const x = document.getElementById("demo");
+
+        if (navigator.geolocation) {
+          navigator.geolocation.watchPosition(success, error, {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+          });
+        } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+
+        function success(position) {
+          const location = {
+            lat: position.coords.latitude.toFixed(10),
+            long: position.coords.longitude.toFixed(10),
+          };
+
+          locations.push(location);
+          console.log(locations);
+
+          drawOnCanvas(locations);
+
+          x.innerHTML =
+            "Latitude: " +
+            position.coords.latitude.toFixed(10) +
+            "<br>Longitude: " +
+            position.coords.longitude.toFixed(10) +
+            "<br>Timestamp: " +
+            new Date(position.timestamp).toLocaleTimeString();
+        }
+
+        function error(err) {
+          x.innerHTML = "Error: " + err.message;
+        }
+      }
+
+      geolocation();
+
+      setInterval(() => {
+        geolocation();
+      }, 10000);
+
+      function drawOnCanvas(locations) {
+        const canvas = document.getElementById("canvas");
+
+        for (let i = 0; i < locations.length; i++) {
+          if (i === 0) {
+            const ctx = canvas.getContext("2d");
+            ctx.beginPath();
+            ctx.arc(150, 150, 20, 0, 2 * Math.PI);
+            ctx.fill();
+          } else {
+            const latPositionOnCanvas = locations[i].lat - locations[i - 1].lat;
+            console.log(latPositionOnCanvas);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
